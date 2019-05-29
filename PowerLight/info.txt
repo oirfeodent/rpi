@@ -1,0 +1,9 @@
+https://howchoo.com/g/ytzjyzy4m2e/build-a-simple-raspberry-pi-led-power-status-indicator
+
+Edit your /boot/config.txt file and add the following line:
+
+enable_uart=1
+
+
+Pin 8	(TxD of UART) 	LED's "long" (positive/anode)
+Pin 9	(ground)	LED's "short" (negative/cathode) via 330 ohm resistor 
