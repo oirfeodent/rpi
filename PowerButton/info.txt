@@ -1,3 +1,11 @@
+Note the pins used are 5 and 6.
+
+Shorting 5 & 6 momentarily starts pi.
+Rest are programmed below.
+
+Adapted from https://howchoo.com/g/mwnlytk3zmm/how-to-add-a-power-button-to-your-raspberry-pis
+
+
 1. Create dir scripts and change directory
 
 2. Create file listen-for-shutdown.py 
