@@ -1,0 +1,103 @@
+1. Create dir scripts and change directory
+
+2. Create file listen-for-shutdown.py 
+
+#!/usr/bin/env python
+
+from gpiozero import Button
+import subprocess
+
+perform_halt = 0
+
+def longpress():
+    global perform_halt
+    perform_halt = 1
+
+button = Button(3, hold_time=2)
+button.when_held = longpress
+
+button.wait_for_press()
+button.wait_for_release()
+
+if (perform_halt):
+    subprocess.call(['shutdown', '-h', 'now'], shell=False)
+else:
+    subprocess.call(['shutdown', '-r', 'now'], shell=False)
+
+3. Replace the if else block above.
+
+4. python listen-for-shutdown.py
+
+5. curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+
+6. sudo python get-pip.py
+
+7. sudo pip install gpiozero
+
+8. sudo cp -p listen-for-shutdown.py /usr/local/bin
+
+9. sudo chmod +x /usr/local/bin/listen-for-shutdown.py
+
+10. vi listen-for-shutdown.sh
+
+#! /bin/sh
+
+### BEGIN INIT INFO
+# Provides:          listen-for-shutdown.py
+# Required-Start:    $remote_fs $syslog
+# Required-Stop:     $remote_fs $syslog
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+### END INIT INFO
+
+# If you want a command to always run, put it here
+
+# Carry out specific functions when asked to by the system
+case "$1" in
+  start)
+    echo "Starting listen-for-shutdown.py"
+    /usr/local/bin/listen-for-shutdown.py &
+    ;;
+  stop)
+    echo "Stopping listen-for-shutdown.py"
+    pkill -f /usr/local/bin/listen-for-shutdown.py
+    ;;
+  *)
+    echo "Usage: /etc/init.d/listen-for-shutdown.sh {start|stop}"
+    exit 1
+    ;;
+esac
+
+exit 0
+
+11. sudo cp -p listen-for-shutdown.sh /etc/init.d/
+
+12. sudo chmod +x /etc/init.d/listen-for-shutdown.sh
+
+13. sudo update-rc.d listen-for-shutdown.sh defaults
+
+14. sudo /etc/init.d/listen-for-shutdown.sh start
+	above errored proceed below
+
+15. sudo apt-get update
+
+16. sudo apt-get install build-essential
+
+17. export ARCH=arm
+
+18. export CROSS_COMPILE=/usr/bin/
+
+19. sudo apt-get update
+ 
+20. sudo apt-get install -y python-dev
+
+21. sudo apt-get install -y python-pip
+
+22. sudo easy_install -b /home/osmc/scripts -U distribute
+
+23. sudo pip install rpi.gpio
+
+24. sudo /etc/init.d/listen-for-shutdown.sh start
+	error should have been resolved
+
+25. 
